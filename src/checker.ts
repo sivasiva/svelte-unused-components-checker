@@ -5,7 +5,7 @@ import path from 'path';
 import glob from 'glob';
 
 export function getCheckExpression(file): string {
-  return `(import|require).*(?:[\'\"]\\b|\\/)${path.basename(file, path.extname(file))}(?:\\.(?:vue))?[\'\"][\\\);,]?[,;]?`;
+  return `(import|require).*(?:[\'\"]\\b|\\/)${path.basename(file, path.extname(file))}(?:\\.(?:svelte))?[\'\"][\\\);,]?[,;]?`;
 }
 
 export default function (src, maxOpenFiles, ignore): void {
@@ -28,7 +28,7 @@ export default function (src, maxOpenFiles, ignore): void {
         function (file, index, cb) {
           spinner.text = 'Checking for unused Components: ' + file;
           textSearch
-            .findAsPromise(new RegExp(getCheckExpression(file), 'i'), ['**/*.{js,jsx,ts,tsx}', '**/*.vue'], {
+            .findAsPromise(new RegExp(getCheckExpression(file), 'i'), ['**/*.{js,jsx,ts,tsx}', '**/*.svelte'], {
               cwd: src,
               ignore: ignore,
             })
